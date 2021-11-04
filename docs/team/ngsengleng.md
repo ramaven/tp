@@ -75,8 +75,6 @@ Given below are some of my notable contributions to the project.
         * Wrote Use Case 4.
 
 * **Community**:
-    * Reviewed PRs of fellow teammates (Some with non-trivial review comments, E.g. [PR #83](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/83), [PR #112](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/112))
-    * Improved code quality and reusability of some classes that are shared and jointly used by several team members.
-      (E.g. [PR #140](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/140), [PR #141](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/141))
+    * Reviewed PRs of fellow teammates (Some with non-trivial review comments, E.g. [PR #222](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/222), [PR #123](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/123))
     * Reported bugs and suggestions for other teams during [PE-D](https://github.com/ngsengleng/ped). 
 
