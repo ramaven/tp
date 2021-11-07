@@ -61,12 +61,15 @@ Given below are some of my notable contributions to the project.
         * Wrote the [profile command instructions](https://ay2122s1-cs2103t-t15-1.github.io/tp/UserGuide.html#352-customizing-your-own-profile-profile) section. 
           (The summary of the parameter constraints in this section was done by my teammate, Seng Leng)
         * Reviewed and corrected grammar and formatting issues of team members' sections of the UG
-          (E.g. Corrected teammate's formatting error while working on my own UG/DG section in [PR #307](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/307),
-          Commented and gave suggestion on UG formatting issue in [PR #36](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/36#discussion_r715329502))
+          (E.g. Corrected teammate's formatting error in [PR #307](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/307),
+          Gave suggestion on UG formatting issue in [PR #36](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/36#discussion_r715329502))
     * Developer Guide:
       * Revamped the [Storage Component](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#storage-component) 
         segment of the original AB3 DG. This included updating the Class Diagram, as well as adding more details about the implementation of the `Storage` class in general.
-      * Wrote the section about the implementation of the [profile command execution](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#customizing-users-personal-profile-in-gomedic). 
+      * Wrote the section about the implementation of the [profile command execution](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#customizing-users-personal-profile-in-gomedic).
+      * Wrote [Use Case 9](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#use-cases).
+      * Wrote the manual testing instructions for [listing records](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#listing-records-in-gomedic), 
+        [changing user profile](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#changing-the-user-profile), [editing a doctor's record](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#editing-a-record-in-gomedic)
 
 * **Community**:
     * Reviewed PRs of fellow teammates (Some with non-trivial review comments, E.g. [PR #83](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/83), [PR #112](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/112))
