@@ -759,7 +759,7 @@ testers are expected to do more *exploratory* testing.
     6. Test case: `add t/activity s/15-09-2025 15:00 e/15-09-2025 14:00 ti/Activity 5`<br>
        Expected: Error message start time must be strictly less than end time is shown in the feedback box.
    
-    7. Other incorrect `add t/activity` commands to try: `add t/activities` with invalid parameters, `...` <br>
+    7. Other incorrect `add t/activity` commands to try: `add t/activities` with invalid parameters, etc <br>
        Expected: Error message shown in the feedback box.
 
 2. Add a new patient by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
@@ -780,6 +780,22 @@ testers are expected to do more *exploratory* testing.
 
     6. Other incorrect `add t/patient` commands to try: `add t/patients` with invalid parameters, etc. <br>
        Expected: Error message shown in the feedback box.
+
+3. Add a new doctor by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
+
+    1. **Prerequisites**: Ensure the doctors' data are empty by using `clear t/doctor` command and check it again using `list t/doctor` command. The table should show "no doctors to be displayed".
+
+    2. Test case: `add t/doctor n/John Smith p/98765432 de/Cardiology`<br>
+       Expected: New doctor whose id `D001` is created, confirmation is shown in feedback box, and the doctor table is shown.
+
+    4. Test case: `add t/doctor n/Tim Burton p/93561345`<br>
+       Expected: Error message of invalid command format is shown in the feedback box, as a department was not specified.
+
+    5. Test case: `add t/doctor n/Cedric Tom p/11112222333 de/Cardiology`<br>
+       Expected: Error message that phone number should be 8 digits long is shown in the feedback box.
+
+    6. Other incorrect `add t/doctor` commands to try: `add t/doctors`, invalid parameters, `...` <br>
+       Expected: Error message shown in the feedback box.
    
 ### Deleting a record in GoMedic
 
@@ -795,7 +811,7 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `delete t/activity A001`<br>
        Expected: No activity is deleted. Error details shown in the feedback box. 
 
-    4. Other incorrect `delete t/activity` commands to try: `delete t/activity`, `delete t/activities`, `delete t/activity x` (where x is an invalid id), `...` <br>
+    4. Other incorrect `delete t/activity` commands to try: `delete t/activity`, `delete t/activities`, `delete t/activity x` (where x is an invalid id), etc <br>
        Expected: Error message shown in the feedback box.
 
 2. Deleting a patient while all patients are being shown
@@ -818,6 +834,21 @@ testers are expected to do more *exploratory* testing.
        Expected: Patient with id `P001` is deleted. Details of the deleted patient shown in the feedback box. Appointment related to the patient will be deleted as well.
 
     6. Other incorrect delete patient commands to try: `delete t/patient`, `delete t/patients`, `delete t/patient x` (where x is an invalid id), etc <br>
+       Expected: Error message shown in the feedback box.
+
+3. Deleting a doctor while all doctors are being shown
+   
+    1. **Prerequisites**: List all doctors using the `list t/doctor` command.
+       Ensure at least 1 doctor with id `D001` is there, otherwise please use `add t/doctor` command to add a new doctor.
+       Multiple doctors will be displayed in a table sorted by its id.
+
+    2. Test case: `delete t/doctor D001`<br>
+       Expected: Doctor with id `D001` is deleted. Details of the deleted doctor are shown in the feedback box.
+
+    3. Test case: `delete t/doctor D001`<br>
+       Expected: No doctor is deleted. Error details shown in the feedback box.
+
+    4. Other incorrect delete doctor commands to try: `delete t/doctor`, `delete t/doctors`, `delete t/doctor x` (where x is an invalid id), `...` <br>
        Expected: Error message shown in the feedback box.
        
 ### Editing a record in GoMedic
@@ -858,7 +889,7 @@ testers are expected to do more *exploratory* testing.
     4. Test case: `edit t/doctor i/D001 n/Jon Low p/9191`<br>
        Expected: Feedback box displays constraint violation error message, indicating that the phone number has to be entirely numeric and exactly 8 digits.
 
-    6. Other incorrect `edit t/doctor` commands to try: `edit t/doctor` (no parameters supplied), `edit t/doctor n/` (no value supplied for `NAME` parameter), `...` <br>
+    6. Other incorrect `edit t/doctor` commands to try: `edit t/doctor` (no parameters supplied), `edit t/doctor n/` (no value supplied for `NAME` parameter), etc <br>
       Expected: Feedback box displays error message indicating an invalid command / invalid command format / parameter constraints violations.
 
 3. Editing an existing patient
@@ -881,7 +912,7 @@ testers are expected to do more *exploratory* testing.
     6. Test case: `edit t/patient i/P001 b/C+`<br>
        Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
-    7. Other incorrect delete patient commands to try: `delete t/patients`, `edit t/patient` (no parameters), `...` <br>
+    7. Other incorrect delete patient commands to try: `delete t/patients`, `edit t/patient` (no parameters), etc <br>
        Expected: Error message shown in the feedback box.
 
 ### Changing the user profile
@@ -918,7 +949,7 @@ testers are expected to do more *exploratory* testing.
        Expected: A new referral called `Referral.pdf` is created in the `data` folder. The file should look like the following image but the date should be the date where you run the referral command.<br>
     ![referral](images/referral.png)
 
-    3. Other incorrect `referral` commands to try: `referral ti/test di/d002 pi/p003` (non-existent doctor and patient id), `...` <br>
+    3. Other incorrect `referral` commands to try: `referral ti/test di/d002 pi/p003` (non-existent doctor and patient id), etc <br>
         Expected: Error message shown in the feedback box.
 
 ### Viewing a patient
@@ -962,7 +993,7 @@ testers are expected to do more *exploratory* testing.
        corresponds to date that the user tests the `list t/activity` command. Then, run `list t/activity s/ID p/TODAY`. <br>
        Expected: GoMedic shows a table of activities that includes the activity mentioned above.
 
-    7. Other invalid `list t/activity` commands to try: `list t/activites`, `list t/activity s/HOHO` (invalid parameter supplied), `...` <br>
+    7. Other invalid `list t/activity` commands to try: `list t/activites`, `list t/activity s/HOHO` (invalid parameter supplied), etc <br>
        Expected: Feedback box displays error message indicating an invalid command / parameter constraints violations.
 
 2. Listing doctors in GoMedic
