@@ -492,7 +492,7 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 
 ### Notable Use cases
 
-For all use cases, the **System** is the `GoMedic` and the **Actor** is the `user`, unless specified otherwise
+For all use cases, the **System** is the `GoMedic` and the **Actor** is the `user`.
 
 **Use Case: [UC1] - Adding a new patient record**
 
