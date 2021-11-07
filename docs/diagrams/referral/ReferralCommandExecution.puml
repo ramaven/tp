@@ -47,7 +47,7 @@ ReferralCommand -> CommandResult
 activate CommandResult
 return c
 
-return
+return c
 
 'Show destructor'
 LogicManager -[hidden]-> ReferralCommand
