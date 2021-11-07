@@ -490,9 +490,7 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 
 <div style="page-break-after: always;"></div>
 
-### Use cases
-
-List of notable use cases in **GoMedic**. 
+### Notable Use cases
 
 (For all use cases below, the **System** is the `GoMedic` and the **Actor** is the `user`, unless specified otherwise)
 
@@ -590,6 +588,8 @@ which patient it is scheduled with.
   
     Use Case ends.
 
+<div style="page-break-after: always;"></div>
+
 **Use Case: [UC5] - Searching for specific records based on a specific field**
 
 **MSS**
@@ -633,6 +633,8 @@ entries corresponding to the user's input.
 
       Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 **Use Case: [UC7] - Clear all doctor records in GoMedic**
 
 **MSS**
@@ -663,7 +665,9 @@ entries corresponding to the user's input.
 * 2a. There is no previous command.
 
   Use case ends.
-  
+
+<div style="page-break-after: always;"></div>
+
 **Use Case: [UC9] - Changing the user's profile**
 
 **MSS**
@@ -693,9 +697,9 @@ entries corresponding to the user's input.
 
 1. Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2. Should be able to be run without any installation required as long as the user has Java `11` installed.
-3. Should be able to hold up to 1000 patients and colleagues without a noticeable delay (less than 2 seconds) in
+3. Should be able to hold up to 2000 patients and colleagues without a noticeable delay (less than 2 seconds) in
    performance for typical usage.
-4. Should be able to hold up to 200 future activities and future appointments, and be retrieved without a noticeable
+4. Should be able to hold up to 1000 future activities and future appointments, and be retrieved without a noticeable
    delay (less than 2 seconds) for typical searches.
 5. Should be only used by a single user and do not require other users to make changes to the app such as making
    appointment or sharing activities.
@@ -723,9 +727,6 @@ entries corresponding to the user's input.
 * **JAR** : Java Archive file format, which is typically used to aggregate many Java class files and associated metadata
   into one file for distribution.
 * **Typical usage/searches** : Finding by keyword, name, medical histories, and any combination of the field manually.
-* **Object-Oriented Paradigm** : programming paradigm that organizes software design around objects rather than
-  functions and logic. For complete list of Features that OO design should have,
-  please [visit this wikipedia page](https://en.wikipedia.org/wiki/Object-oriented_programming)
 
 <div style="page-break-after: always;"></div>
 
@@ -951,6 +952,8 @@ testers are expected to do more *exploratory* testing.
         the illegal character `.` in its `NAME`, `DEPARTMENT` or `ORGANIZATION` parameters.
         Expected: The feedback box displays an error message stating that the constraints for those parameters have been 
         violated, similar to that in test case 3.
+
+<div style="page-break-after: always;"></div>
 
 ### Creating A Referral
 
@@ -1190,8 +1193,10 @@ testers are expected to do more *exploratory* testing.
    
       3. Test case: `Down` arrow key is pressed twice
          Expected: The input box should be cleared.
-   
-## **Appendix: Effort**
+
+<div style="page-break-after: always;"></div>
+
+## **Appendix:** Effort
 
 **Overview**
 
