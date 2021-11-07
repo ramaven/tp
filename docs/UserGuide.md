@@ -138,7 +138,6 @@ return some suggestions on the closest commands that you can choose from!
 
     * **`exit`** : Exits the app.
 5. **Address Book, GoMedic Address Book, and GoMedic** refers to the same term, which is just the application itself.
-6. Refer to the [Features](#3-gomedic-features) below for details of each command.
 
 <div style="page-break-after: always;"></div>
 
