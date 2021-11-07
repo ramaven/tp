@@ -888,6 +888,10 @@ The model that is being searched must be specified too - doctor, patient or acti
 For all find functions, the Keyword is case-insensitive for convenience (“dia” will match diabetic patients even if the user stored the patient's
   condition as “Diabetes”)
 
+The keywords entered will be separated by spaces and each word will be checked against the specified field to see if there is a match.
+A match, in this context, is defined by when the specified field contains a word from the keywords, as a substring. 
+For example, ```find t/doctor n/bo yang lim``` will return doctors with names containing ```bo``` or ```yang``` or ```lim```. 
+
 The constraints of the field are not checked with the user input. For example, if the user enters
 ```find t/doctor p/hello```, GoMedic will not throw an error saying that phone number must be
 8 digits only. GoMedic will simply display that there are no matching entries where the phone number
@@ -905,9 +909,9 @@ The possible parameters for FIELD are:
 
 Parameters    |  Explanation                                      |               
 --------------|---------------------------------------------------|
-`n/NAME`      | Matches the full name of the doctor                |
-`p/PHONE_NUMBER`| Matches the phone number of the doctor            | 
-`de/DEPARTMENT` | Matches the department of the doctor           |
+`n/NAME`      | Matches the name of the doctor                    |
+`p/PHONE_NUMBER`| Matches the phone number of the doctor          | 
+`de/DEPARTMENT` | Matches the department of the doctor            |
 
 <div style="page-break-after: always;"></div>
 
@@ -944,7 +948,7 @@ The possible parameters for FIELD are:
 
 Parameters    |  Explanation                                      |               
 --------------|---------------------------------------------------|
-`n/NAME`      | Matches the full name of the patient              |
+`n/NAME`      | Matches the name of the patient                   |
 `p/PHONE_NUMBER`| Matches the phone number of the patient         | 
 `a/AGE`         | Matches the age field                           |
 `g/GENDER`    | Matches the gender of the patient                 | 
@@ -990,7 +994,7 @@ The possible parameters for FIELD are:
 
 Parameters    |  Explanation                                      |               
 --------------|---------------------------------------------------|
-`ti/TITLE`     | Matches the title field or description           |                            
+`ti/TITLE`     | Matches the title field or description field     |                            
 
 **Example:**
 
