@@ -182,6 +182,8 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddPatientParser`, `DeletePatientParser`, ...) inherit from the `Parser`
   interface so that they can be treated similarly where possible e.g, during testing.
 
+<div style="page-break-after: always;"></div>
+
 ### Model component
 
 **API** : [`Model.java`](https://github.com/AY2122S1-CS2103T-T15-1/tp/tree/master/src/main/java/gomedic/model/Model.java)
@@ -246,7 +248,7 @@ the `Storage` architecture, and to reduce unnecessary information overload.
 
 Classes used by multiple components are in the `gomedic.commons` package.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -400,7 +402,7 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Requirements**
 
