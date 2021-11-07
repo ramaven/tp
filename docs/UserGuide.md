@@ -962,7 +962,7 @@ Parameters    |  Explanation                                      |
 
 &#8291;2. Now add 2 new patients using `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and `add t/patient n/John Doe p/98765432 a/30 b/O+ g/M h/160 w/90 m/diabetes`.
 Ensure they are added by using `list t/patient` command. To find the patient whose blood type is O+, simply type the command `find t/patient b/O+` again.
-**GoMedic** would show number of matching records as shown in **1** and display them in the table as shown in **2**. You can use [`view t/patient`](#316-display-full-details-of-a-patient-view-tpatienttable-of-contents)
+**GoMedic** would show number of matching records as shown in **1** and display them in the table as shown in **2**. You can use [`view t/patient`](#316-display-full-details-of-a-patient-view-tpatient)
 to verify the result.
 
 ![findSuccess](images/find/findPatientSuccess.png)
