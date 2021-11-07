@@ -890,6 +890,7 @@ For all find functions, the Keyword is case-insensitive for convenience (â€œdiaâ
 
 The keywords entered will be separated by spaces and each word will be checked against the specified field to see if there is a match.
 A match, in this context, is defined by when the specified field contains a word from the keywords, as a substring. 
+For example, ```find t/doctor n/bo yang lim``` will return doctors with names containing ```bo``` or ```yang``` or ```lim```. 
 
 The constraints of the field are not checked with the user input. For example, if the user enters
 ```find t/doctor p/hello```, GoMedic will not throw an error saying that phone number must be
