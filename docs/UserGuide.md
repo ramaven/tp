@@ -929,6 +929,8 @@ Ensure they are added by using `list t/doctor` command. To find the doctor whose
 
 ![findFail](images/find/findFail.png)
 
+To understand better how **GoMedic** classifies the error messages, please refer to [this](#13-error-messages) section.
+
 <div style="page-break-after: always;"></div>
 
 ### [3.4.3 Finding a patient through a keyword `find t/patient`](#table-of-contents)
@@ -972,6 +974,8 @@ to verify the result.
 
 ![findFail](images/find/findPatientFail.png)
 
+To understand better how **GoMedic** classifies the error messages, please refer to [this](#13-error-messages) section.
+
 <div style="page-break-after: always;"></div>
 
 ### [3.4.4 Finding an activity through a keyword `find t/activity`](#table-of-contents)
@@ -1007,6 +1011,8 @@ Parameters    |  Explanation                                      |
 **GoMedic** will make the commands turn red as shown in **1** and would display the feedback as shown in **2**.
 
 ![findFail](images/find/findActivityFail.png)
+
+To understand better how **GoMedic** classifies the error messages, please refer to [this](#13-error-messages) section.
 
 <div style="page-break-after: always;"></div>
 
