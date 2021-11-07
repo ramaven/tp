@@ -772,13 +772,13 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `add t/patient n/John Snow p/12312312 a/51 b/B+ g/M h/173 w/65 m/heart failure`<br>
        Expected: New patient whose id `P002` is created.
 
-    4. Test case: `add t/patient n/Tim Burton p/33334444 a/50 b/O- g/M h/173 w/65`<br>
+    4. Test case: `add t/patient n/Tim Burton p/33334444 a/50 b/O g/M h/173 w/65`<br>
        Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
     5. Test case: `add t/patient n/Cedric Tom p/11112222 a/23 b/O+ g/M h/800 w/65`<br>
        Expected: Error message height should be integer between 1 and 300 inclusive is shown in the feedback box.
 
-    6. Other incorrect `add t/patient` commands to try: `add t/patients` with invalid parameters, etc. <br>
+    6. Other incorrect `add t/patient` commands to try: `add t/patients`, `add t/patient` with invalid parameters, etc. <br>
        Expected: Error message shown in the feedback box.
 
 3. Add a new doctor by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
@@ -912,7 +912,7 @@ testers are expected to do more *exploratory* testing.
     6. Test case: `edit t/patient i/P001 b/C+`<br>
        Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
-    7. Other incorrect delete patient commands to try: `delete t/patients`, `edit t/patient` (no parameters), etc <br>
+    7. Other incorrect `edit t/patient` commands to try: `edit t/patients`, `edit t/patient` (no parameters), etc <br>
        Expected: Error message shown in the feedback box.
 
 ### Changing the user profile
