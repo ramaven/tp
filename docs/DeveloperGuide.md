@@ -23,6 +23,7 @@ optimized features for Command Line Interface.
 * Project bootstrapped from: [SE-EDU Address Book 3](https://se-education.org/addressbook-level3/)
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson)
   , [JUnit5](https://github.com/junit-team/junit5), [iTextPdf](https://itextpdf.com/en)
+* The feature `TableView` mainly inspired by [this `TableView` article](http://tutorials.jenkov.com/javafx/tableview.html).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -154,9 +155,15 @@ How the `Logic` component works:
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned from `Logic`.
 
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the
-`execute("delete t/patient P001")` API call.
+`execute("delete t/patient P001")` API call. `Logic` component will parse the command and create the respective `Command`
+object. In this case, `DeletePatientCommand` object is created.
 
-![Interactions Inside the Logic Component for the `delete t/patient P001` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete t/patient P001` Command Creation](images/DeletePatientCreation.png)
+
+After the `LogicManager` receives the new `DeletePatientCommand` object,
+1. The `DeletePatientCommand` would call the appropriate method from the `Model` to delete the specified `Patient`.
+
+![Interactions Inside the Logic Component for the `delete t/patient P001` Command Execution](images/DeletePatientExecution.png)
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
@@ -292,6 +299,10 @@ _This feature uses **iText Java Pdf writer library** to generate the medical ref
 
 **Workflow**
 
+In general, the following *Activity Diagram* summarizes the workflow of this command :
+
+![workflow](images/referral/ReferralCommandWorkflow.png)
+
 For illustration purposes, suppose the user enters the command:
 
 `referral ti/Referral of Patient A di/D001 pi/P001 d/He is having internal bleeding, need urgent attention.`
@@ -359,87 +370,21 @@ This feature allows user to view patient's details as PatientTable does not show
 This feature can be accessed using the `view` command, which currently only support the viewing of patient which follows
 the following format `view t/patient PATIENT_ID` where `PATIENT_ID` is a valid id of a patient.
 
-Given below is the sequence diagram when a user provides an example of a valid `view` command
-(`view t/patient P001`) to see the complete details of the patient.
+Given below is an activity diagram showing the event flow when the user wants to view a patient's details:
 
-![ViewPatientCommand](images/ViewSequenceDiagram.png)
+![ViewPatientActivityDiagram](images/ViewPatientActivityDiagram.png)
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo
-history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the
-following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()`
-and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the
-initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command
-calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes
-to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book
-state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`
-, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
+<div markdown="span" class="alert alert-info">:information_source:
+**Note:** The example below does not include the details of the creation of a `ViewPatientCommand` object, as the
+implementation is similar to that of the example covered in the `ReferralCommand` above.
 </div>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing
-the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer`
-once to the left, pointing it to the previous address book state, and restores the address book to that state.
+![ViewPatientCommandExecution](images/ViewPatientExecution.png)
 
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once
-to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such
-as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`.
-Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not
-pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be
-purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern
-desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
+After the `LogicManager` receives the new `ViewPatientCommand` object,
+1. The `ViewPatientCommand` would call the appropriate method from the `Model` to obtain the `Patient`'s specific details
+   to be viewed.
+2. Only then a `CommandResult` object will be returned.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -470,9 +415,10 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * manage patients contacts faster than a typical mouse/GUI driven app
 * able to manage other doctors' details
-* able to store sheer amount of patient details and retrieve them very fast
-* able to compare patient medical histories very fast
-* able to remind user of upcoming activities and appointments
+* able to store large amount of patients' medical data
+* able to retrieve the detailed information of a patient very quickly
+* able to find certain particular patients, activities, or doctors
+* able to display upcoming activities and appointments to the user
 * easy to use and would give suggestion on the closest command whenever typo is made
 
 ### User stories
@@ -561,8 +507,8 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 1. User requests to list all patients.
 2. GoMedic shows a list of patients.
-3. User requests to delete a specific person in the list.
-4. GoMedic deletes the person.
+3. User requests to delete a specific patient in the list.
+4. GoMedic deletes the patient.
 
    Use case ends.
 
@@ -653,7 +599,7 @@ entries corresponding to the user's input.
 1. User requests to list all patients.
 2. GoMedic shows a list of patients.
 3. User requests to view a specific patient in the list.
-4. GoMedic shows the person details
+4. GoMedic shows the patient's details
 
    Use case ends.
 
@@ -669,7 +615,7 @@ entries corresponding to the user's input.
 
       Use case ends.
 
-**Use Case: [UC7] - Clear all doctors records in GoMedic**
+**Use Case: [UC7] - Clear all doctor records in GoMedic**
 
 **MSS**
 
@@ -684,6 +630,44 @@ entries corresponding to the user's input.
 * 2a. The list is empty.
 
   Use case ends.
+
+**Use Case: [UC8] - Navigate to the past command**
+
+**MSS**
+
+1. User wants to get the previous command he typed.
+2. GoMedic shows the previous command the user typed.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. There is no previous command.
+
+  Use case ends.
+  
+**Use Case: [UC9] - Changing the user's profile**
+
+**MSS**
+
+1. User requests to change his/her profile on GoMedic
+2. GoMedic shows confirmation that the user's profile has been updated, and displays the new profile
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The details supplied by the user is incomplete.
+
+  * 1a1. GoMedic shows a feedback to the user about the necessary details that need to be supplied.
+  
+    Use Case ends.
+
+* 1b. An incorrect detail, that does not conform to the constraints imposed by GoMedic, is supplied by the user.
+
+    * 1b1. GoMedic shows a feedback to the user about the detail of the constraint that is violated. 
+
+      Use case ends.
     
 *{More to be added}*
 
@@ -744,21 +728,80 @@ testers are expected to do more *exploratory* testing.
 
     1. Download the jar file and copy into an empty folder
 
-    1. Double-click the jar file. If you are unable to do so, you might need to run `java -jar gomedic.jar` from the terminal where the `gomedic.jar` file is located. Expected: Shows the GUI with a set of sample contacts. The window size may not be
+    2. Double-click the jar file. If you are unable to do so, you might need to run `java -jar gomedic.jar` from the terminal where the `gomedic.jar` file is located. Expected: Shows the GUI with a set of sample contacts. The window size may not be
        optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
     1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-    
-### Deleting an activity
+
+### Adding a record in GoMedic
+
+1. Add a new activity by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
+
+    1. **Prerequisite**: Ensure you activities data are empty by using `clear t/activity` command and check it again using `list t/activity` command. The table should show "no activities to be displayed".
+
+    2. Test case: `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Activity 1 d/Discussing the future of CS2103T-T15 Group!`<br>
+       Expected: New activity whose id `A001` is created, confirmation is shown in feedback box, and the activity table is shown.
+
+    3. Test case: `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Activity 2`<br>
+       Expected: Conflicting activity error is shown.
+
+    4. Test case: `add t/activity s/15/09/2023 14:00 e/15/09/2023 15:00 ti/Activity 3`<br>
+       Expected: New activity whose id `A002` is created with empty description. 
+   
+    5. Test case: `add t/activity s/15-09-2024 14:00 e/15-09-2024 15:00 ti/Activity 4`<br>
+       Expected: New activity whose id `A003` is created with empty description despite different datetime format supplied.
+
+    6. Test case: `add t/activity s/15-09-2025 15:00 e/15-09-2025 14:00 ti/Activity 5`<br>
+       Expected: Error message start time must be strictly less than end time is shown in the feedback box.
+   
+    7. Other incorrect `add t/activity` commands to try: `add t/activities` with invalid parameters, etc <br>
+       Expected: Error message shown in the feedback box.
+
+2. Add a new patient by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
+
+    1. **Prerequisite**: Ensure you patients data are empty by using `clear t/patient` command and check it again using `list t/patient` command. The table should show "no patients to be displayed".
+
+    2. Test case: `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes`<br>
+       Expected: New patient whose id `P001` is created, confirmation is shown in feedback box, and the patient table is shown.
+
+    3. Test case: `add t/patient n/John Snow p/12312312 a/51 b/B+ g/M h/173 w/65 m/heart failure`<br>
+       Expected: New patient whose id `P002` is created.
+
+    4. Test case: `add t/patient n/Tim Burton p/33334444 a/50 b/O- g/M h/173 w/65`<br>
+       Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
+
+    5. Test case: `add t/patient n/Cedric Tom p/11112222 a/23 b/O+ g/M h/800 w/65`<br>
+       Expected: Error message height should be integer between 1 and 300 inclusive is shown in the feedback box.
+
+    6. Other incorrect `add t/patient` commands to try: `add t/patients` with invalid parameters, etc. <br>
+       Expected: Error message shown in the feedback box.
+
+3. Add a new doctor by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
+
+    1. **Prerequisites**: Ensure the doctors' data are empty by using `clear t/doctor` command and check it again using `list t/doctor` command. The table should show "no doctors to be displayed".
+
+    2. Test case: `add t/doctor n/John Smith p/98765432 de/Cardiology`<br>
+       Expected: New doctor whose id `D001` is created, confirmation is shown in feedback box, and the doctor table is shown.
+
+    4. Test case: `add t/doctor n/Tim Burton p/93561345`<br>
+       Expected: Error message of invalid command format is shown in the feedback box, as a department was not specified.
+
+    5. Test case: `add t/doctor n/Cedric Tom p/11112222333 de/Cardiology`<br>
+       Expected: Error message that phone number should be 8 digits long is shown in the feedback box.
+
+    6. Other incorrect `add t/doctor` commands to try: `add t/doctors`, invalid parameters, `...` <br>
+       Expected: Error message shown in the feedback box.
+   
+### Deleting a record in GoMedic
 
 1. Deleting an activity while all activities are being shown
 
-    1. Prerequisites: List all activities using the `list t/activity` command. 
+    1. **Prerequisite**: List all activities using the `list t/activity` command. 
        Ensure at least 1 activity with id `A001` is there, otherwise please use `add t/activity` command to add a new activity. 
        Multiple activities will be displayed in a table sorted by its id.
 
@@ -768,12 +811,303 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `delete t/activity A001`<br>
        Expected: No activity is deleted. Error details shown in the feedback box. 
 
-    4. Other incorrect delete commands to try: `delete t/activity`, `delete t/doctor`, `delete t/activity x`, `...` (where x is an invalid id)<br>
-       Expected: Similar to previous for each patient, doctor and activity model.
+    4. Other incorrect `delete t/activity` commands to try: `delete t/activity`, `delete t/activities`, `delete t/activity x` (where x is an invalid id), etc <br>
+       Expected: Error message shown in the feedback box.
 
+2. Deleting a patient while all patients are being shown
+
+    1. **Prerequisite**: List all patients using the `list t/patient` command.
+       Ensure at least 1 patient with id `P001` is there, otherwise please use `add t/patient` command to add a new patient.
+       Multiple patients will be displayed in a table sorted by its id.
+
+    2. Test case: `delete t/patient P001`<br>
+       Expected: Patient with id `P001` is deleted. Details of the deleted patient shown in the feedback box.
+
+    3. Test case: `delete t/patient P001`<br>
+       Expected: No patient is deleted. Error details shown in the feedback box.
+
+    4. **Prerequisite**: Clear the entire GoMedic using `clear` command.
+       Add 1 new patient by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
+       1 new appointment by running `add t/appointment i/P001 s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Appointment with P001 d/Follow-up from tuesday's appointment.`
+
+    5. Test case: `delete t/patient P001`<br>
+       Expected: Patient with id `P001` is deleted. Details of the deleted patient shown in the feedback box. Appointment related to the patient will be deleted as well.
+
+    6. Other incorrect delete patient commands to try: `delete t/patient`, `delete t/patients`, `delete t/patient x` (where x is an invalid id), etc <br>
+       Expected: Error message shown in the feedback box.
+
+3. Deleting a doctor while all doctors are being shown
+   
+    1. **Prerequisites**: List all doctors using the `list t/doctor` command.
+       Ensure at least 1 doctor with id `D001` is there, otherwise please use `add t/doctor` command to add a new doctor.
+       Multiple doctors will be displayed in a table sorted by its id.
+
+    2. Test case: `delete t/doctor D001`<br>
+       Expected: Doctor with id `D001` is deleted. Details of the deleted doctor are shown in the feedback box.
+
+    3. Test case: `delete t/doctor D001`<br>
+       Expected: No doctor is deleted. Error details shown in the feedback box.
+
+    4. Other incorrect delete doctor commands to try: `delete t/doctor`, `delete t/doctors`, `delete t/doctor x` (where x is an invalid id), `...` <br>
+       Expected: Error message shown in the feedback box.
+       
+### Editing a record in GoMedic
+
+1. Editing an existing activity
+
+    1. **Prerequisite**: Clear the entire activity using `clear t/activity` command. 
+   Add a new activity using `add t/activity` command to ensure at least 1 activity with id `A001` is there. Check that it exists using `list t/activity`. Please do the test sequentially. 
+
+    2. Test case: `edit t/activity i/A001 ti/Another new title`<br>
+       Expected: Activity whose id `A001` has its title changed to "Another new title"
+
+    3. Test case: `edit t/activity i/A001 s/17/10/2021 14:00 e/17/10/2021 15:00`<br>
+       Expected: Activity whose id `A001` has its start time changed to "17-10-2021 14:00" and end time to "17-10-2021 15:00"
+
+    4. Test case: `edit t/activity i/A001 s/17/10/2021 18:00 e/17/10/2021 15:00`<br>
+       Expected: Error message shows start time must be before end time. 
+
+    5. Test case: Add another activity using `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y` and then run 
+   `edit t/activity i/A001 s/15/09/2022 14:00 e/15/09/2022 15:00`<br>
+       Expected: Error message shows the activity's timing is conflicting with another activity.
+
+    6. Other incorrect `edit t/activity` commands to try: `edit t/activity i/a001 pi/p001` (cannot change patient id), `edit t/activities`, `edit t/activity` (no parameters), etc. <br>
+      Expected: Error message shown in the feedback box.
+       
+2. Editing an existing doctor
+
+    1. **Prerequisite**: Clear all existing doctors in GoMedic using `clear t/doctor` command. 
+   Add a new doctor using `add t/doctor` command. Ensure that a doctor with id `D001` exists by executing `list t/doctor`. 
+   Conduct the following tests in sequential order. 
+
+    2. Test case: `edit t/doctor i/D001 n/Jon Snow`<br>
+       Expected: Doctor whose id is `D001` has his/her name changed to "Jon Snow".
+
+    3. Test case: `edit t/doctor i/D001 n/Jon Low p/98765432`<br>
+       Expected: Doctor whose id is `D001` has his/her name changed to "Jon Low", and phone number changed to "98765432".
+
+    4. Test case: `edit t/doctor i/D001 n/Jon Low p/9191`<br>
+       Expected: Feedback box displays constraint violation error message, indicating that the phone number has to be entirely numeric and exactly 8 digits.
+
+    6. Other incorrect `edit t/doctor` commands to try: `edit t/doctor` (no parameters supplied), `edit t/doctor n/` (no value supplied for `NAME` parameter), etc <br>
+      Expected: Feedback box displays error message indicating an invalid command / invalid command format / parameter constraints violations.
+
+3. Editing an existing patient
+
+    1. **Prerequisite**: Clear the entire patient using `clear t/patient` command.
+       Add a new patient using `add t/patient` command to ensure at least 1 patient with id `P001` is there. Check that it exists using `list t/patient`. Please do the test sequentially.
+
+    2. Test case: `edit t/patient i/P001 n/Tom tom`<br>
+       Expected: Patient whose id `P001` has his/her name changed to "Tom tom"
+
+    3. Test case: `edit t/patient i/P001 h/165 w/76`<br>
+       Expected: Patient whose id `P001` has his/her height changed to "165" and weight changed to "76"
+
+    4. Test case: `edit t/patient i/P001 p/12345678 b/O-`<br>
+       Expected: Patient whose id `P001` has his/her phone number changed to "12345678" and blood type to "O-"
+
+    5. Test case: `edit t/patient i/P001 a/77 g/O`<br>
+       Expected: Patient whose id `P001` has his/her age changed to "77" and gender changed to "O"
+
+    6. Test case: `edit t/patient i/P001 b/C+`<br>
+       Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
+
+    7. Other incorrect delete patient commands to try: `delete t/patients`, `edit t/patient` (no parameters), etc <br>
+       Expected: Error message shown in the feedback box.
+
+### Changing the user profile
+
+1. Changing the user profile shown on the left side window       
+    
+    1. Test case: `profile n/Jon Snow p/Consultant de/Department of Cardiology o/National University Hospital`
+        Expected: The feedback box displays the confirmation of the change of user profile, 
+        and GoMedic updates the left side window with the corresponding information.
+       
+    2. Test case: `profile n/Bernice Yu p/Associate Professor de/Department of Radiology`
+        Expected: The feedback box displays an error message stating that an invalid command format has been detected. 
+        This corresponds to the fact that the user has not supplied his/her `ORGANIZATION` in the command. 
+       
+    3. Test case: `profile n/Bernice Yu p/Associate. Professor de/Department of Radiology o/Tan Tock Seng Hospital`
+        Expected: The feedback box displays an error message stating that the `POSITION` parameter should only contain alphanumeric characters and spaces. 
+        This corresponds to the fact that the user included an illegal character `.` in the `POSITION` parameter of the command. 
+
+    4. Other incorrect `profile` commands to try: Commands that resemble the command in test case 1, but include 
+        the illegal character `.` in its `NAME`, `DEPARTMENT` or `ORGANIZATION` parameters.
+        Expected: The feedback box displays an error message stating that the constraints for those parameters have been 
+        violated, similar to that in test case 3.
+
+### Creating A Referral
+
+1. Creating a referral using the template available. 
+
+    1. **Prerequisite**: Check that you have `[JAR Location]/data` folder, it should be created after you run **GoMedic** for the first time. 
+   Clear the entire patient and activity using `clear t/patient` and `clear t/doctor` respectively. Run the following commands to add 1 patient and doctor using
+   `add t/patient n/John Doe p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and `add t/doctor n/John Smith p/98765432 de/Cardiology` respectively.<br> Check that patient whose id `P001` and doctor whose id `D001` exists
+   using `list t/patient` and `list t/doctor` respectively. Also use this default profile by inputting this command `profile n/John Smith p/Senior Resident de/Cardiology o/NUH`.
+   
+    2. Test case: `referral ti/Referral di/D001 pi/P001 d/It looks like there may be a small tear in his aorta.`<br>
+       Expected: A new referral called `Referral.pdf` is created in the `data` folder. The file should look like the following image but the date should be the date where you run the referral command.<br>
+    ![referral](images/referral.png)
+
+    3. Other incorrect `referral` commands to try: `referral ti/test di/d002 pi/p003` (non-existent doctor and patient id), etc <br>
+        Expected: Error message shown in the feedback box.
+
+### Viewing a patient
+
+1. Viewing an existing patient
+
+    1. **Prerequisite**: Clear the entire patient using `clear t/patient` command.
+       Add a new patient using `add t/patient` command to ensure only 1 patient exist with id `P001` is there. Check that it exists using `list t/patient`. Please do the test sequentially.
+
+    2. Test case: `view t/patient P001`<br>
+       Expected: Patient whose id `P001` has its details shown in GoMedic application
+
+    3. Test case: `view t/patient P002`<br>
+       Expected: Error message the patient id doesn't exist in the list will be shown in the feedback box
+       
+    4. Other incorrect view patient commands to try: `view t/patients`, `view t/patient` (no parameters), etc. <br>
+       Expected: Error message shown in the feedback box.
+
+### Listing records in GoMedic
+
+1. Listing activities in GoMedic
+
+    1. **Prerequisite**: Clear all existing activities in GoMedic using `clear t/activity` command.
+       Add 2 new activities by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/team meeting d/CS2103t group discussion` and
+       `add t/activity s/14/09/2022 11:00 e/14/09/2022 12:00 ti/Lunch with CEO d/Lunch to discuss promotion` in order.
+       Conduct the following tests in sequential order.
+
+    2. Test case: `list t/activity`<br>
+       Expected: GoMedic shows a table with 2 activities, one with id `A001` and another with id `A002`.
+
+    3. Test case: `list t/activity s/START`<br>
+       Expected: GoMedic shows both activities, but the activity with id `A002` is shown before the activity with id `A001`.
+
+    4. Test case: `list t/activity s/START p/ALL`<br>
+       Expected: GoMedic shows both activities, but the activity with id `A002` is shown before the activity with id `A001`.
+
+    5. Test case: `list t/activity p/HEHE`<br>
+       Expected: The feedback box displays an error message about the parameter supplied.
+
+    6. Other valid `list t/activity` commands to try: First, add an activity whose date for the `START_TIME` and `END_TIME`
+       corresponds to date that the user tests the `list t/activity` command. Then, run `list t/activity s/ID p/TODAY`. <br>
+       Expected: GoMedic shows a table of activities that includes the activity mentioned above.
+
+    7. Other invalid `list t/activity` commands to try: `list t/activites`, `list t/activity s/HOHO` (invalid parameter supplied), etc <br>
+       Expected: Feedback box displays error message indicating an invalid command / parameter constraints violations.
+
+2. Listing doctors in GoMedic
+
+    1. **Prerequisite**: Clear all existing doctors in GoMedic using `clear t/doctor` command.
+       Add 2 new doctors by running `add t/doctor n/John Smith p/98765432 de/Cardiology` and
+       `add t/doctor n/Tom Hill p/12345678 de/Radiology` in order.
+       Conduct the following tests in sequential order.
+
+    2. Test case: `list t/doctor`<br>
+       Expected: GoMedic shows a table with 2 doctors, one with id `D001` and another with id `D002`.
+
+    3. Test case: `list t/doctor extra parameters supplied here`<br>
+       Expected: GoMedic shows a table with 2 doctors, one with id `D001` and another with id `D002`, as it ignores the
+       extra parameters supplied.
+
+    4. Other invalid `list t/doctor` commands to try: `list t/doctors` <br>
+       Expected: Feedback box displays error message indicating an invalid command.
+
+3. Listing patients in GoMedic
+
+    1. **Prerequisite**: Clear all existing patients in GoMedic using `clear t/patient` command.
+       Add 2 new patients by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
+       `add t/patient n/Joan Lim p/12345678 a/30 b/A- g/F h/165 w/45 m/high blood pressure` in order.
+       Conduct the following tests in sequential order.
+
+    2. Test case: `list t/patient`<br>
+       Expected: GoMedic shows a table with 2 patients, one with id `P001` and another with id `P002`.
+
+    3. Test case: `list t/patient extra parameters supplied here`<br>
+       Expected: GoMedic shows a table with 2 patients, one with id `P001` and another with id `P002`, as it ignores the
+       extra parameters supplied.
+
+    4. Other invalid `list t/patient` commands to try: `list t/patients` <br>
+       Expected: Feedback box displays error message indicating an invalid command.
+
+### Clearing records in GoMedic
+
+1. Clearing activity records in GoMedic
+
+    1. **Prerequisite** (**run before every test case**): Clear the entire activity using `clear t/activity` command.
+       Add 2 new activities by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y d/Discussing the future of CS2103T-T15 Group!` and
+       `add t/activity s/16/09/2022 14:00 e/16/09/2022 15:00 ti/Meeting with Mr. X d/Discussing the features of CS2103T-T15 Project!` in order.
+       Conduct the following tests in sequential order.
+
+    2. Test case: `clear t/activity`<br>
+       Expected: GoMedic shows an empty activity table
+
+    3. Test case: `clear t/activity extra parameters supplied here`<br>
+       Expected: GoMedic shows an empty activity table, as it ignores the
+       extra parameters supplied.
+
+    4. Other invalid `clear t/activity` commands to try: `clear t/activities` <br>
+       Expected: Feedback box displays error message indicating an invalid command.
+
+2. Clearing doctor records in GoMedic
+
+    1. **Prerequisite** (**run before every test case**): Clear the entire doctor using `clear t/doctor` command.
+       Add 2 new doctors by running `add t/doctor n/John Smith p/98765432 de/Cardiology` and
+       `add t/doctor n/Tommy Tom p/12312312 de/Skin` in order.
+       Conduct the following tests in sequential order.
+
+    2. Test case: `clear t/doctor`<br>
+       Expected: GoMedic shows an empty doctor table
+
+    3. Test case: `clear t/doctor extra parameters supplied here`<br>
+       Expected: GoMedic shows an empty doctor table, as it ignores the
+       extra parameters supplied.
+
+    4. Other invalid `clear t/doctor` commands to try: `clear t/doctors` <br>
+       Expected: Feedback box displays error message indicating an invalid command.
+
+3. Clearing patient records in GoMedic
+   
+    1. **Prerequisite** (**run before every test case**): Clear the entire patient using `clear t/patient` command.
+       Add 2 new patients by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
+       `add t/patient n/Joan Lim p/12345678 a/30 b/A- g/F h/165 w/45 m/high blood pressure` in order.
+       
+       (**run before test case 4**):
+       Add 1 new appointment by running `add t/appointment i/P001 s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Appointment with P001 d/Follow-up from tuesday's appointment.`
+       Conduct the following tests in sequential order.
+
+    2. Test case: `clear t/patient`<br>
+       Expected: GoMedic shows an empty patient table
+
+    3. Test case: `clear t/patient extra parameters supplied here`<br>
+       Expected: GoMedic shows an empty patient table, as it ignores the
+       extra parameters supplied.
+       
+    4. Test case: `clear t/patient`<br>
+       Expected: GoMedic shows an empty patient table and delete all appointments as all the patients are deleted
+
+    5. Other invalid `clear t/patient` commands to try: `clear t/patients` <br>
+       Expected: Feedback box displays error message indicating an invalid command.
+
+4. Clearing all records in GoMedic
+
+    1. **Prerequisites** (**run before every test case**): Clear the entire GoMedic using `clear` command.
+       Add 1 new activity by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y d/Discussing the future of CS2103T-T15 Group!`,
+       1 new doctor by running `add t/doctor n/John Smith p/98765432 de/Cardiology`, and
+       1 new patient by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes`
+       Conduct the following tests in sequential order.
+
+    2. Test case: `clear`<br>
+       Expected: GoMedic clears all records for activities, doctors, and patients
+
+    3. Test case: `clear extra parameters supplied here`<br>
+       Expected: GoMedic clears all records for activities, doctors, and patients, as it ignores the
+       extra parameters supplied.
+       
 ### Finding a patient, doctor or activity
+
 1. Searching for a doctor or a patient
-    1. Prerequisite: List the patients, doctors, or activities based on which one you wish to see, using the `list` command.
+    1. **Prerequisite**: List the patients, doctors, or activities based on which one you wish to see, using the `list` command.
     e.g. `list t/doctor` or `list t/patient` or `list t/activity`.
        
     2. Test case: e.g. `find t/patient n/Joe`
@@ -783,5 +1117,87 @@ testers are expected to do more *exploratory* testing.
         Expected: All activities whose title or description contains the substring "Meeting" (case-insensitive) will be displayed. 
        
     4. Other incorrect find commands to try: `find t\patient Joe` 
-        Expected: Error message as a flag is not specified prior to the keyword. 
+        Expected: Error message as a flag is not specified prior to the keyword.
 
+### Displaying suggestions for commands that are misspelled
+
+1. Displaying suggestions for commands that are misspelt and in invalid format
+
+   1. Test case: e.g. `find pateint`
+      Expected: `find t/patient`, `find t/doctor`, `find t/activity` should all be listed in the feedback box.
+   
+   2. Test case: e.g. `clap`
+      Expected: `clear t/patient`, `clear t/doctor`, `clear t/activity`, `clear` should all be listed in the feedback box.
+   
+   3. For really badly spelt commands, such as this test case: e.g. `asdahsdhajshd`
+      Expected: Feedback box should only say, `Sorry, asdahsdhajshd is an invalid command.`
+
+2. Displaying suggestions for commands that are misspelt but in valid format
+
+   1. Test case: e.g. `find t/pateint`
+      Expected: only `find t/patient` should be listed in the feedback box.
+   
+   2. Test case: e.g. `add t/appent`
+      Expected: `add t/patient`, `add t/appointment` should both be listed in the feedback box.
+
+   3. Test case: e.g. `add t/apsda`
+      Expected: Feedback box should only say, `Sorry, add t/apsda is an invalid command.`
+
+### Navigating between all commands input in the current session
+
+1. Going back to previously typed commands
+
+   1. **Prerequisite** (follow the steps accordingly before going ahead with the tests in this section): 
+      1. Open up GoMedic
+      2. Clear GoMedic with the `clear` command
+      3. Input `add t/doctor n/John Smith p/98765432 de/Cardiology` and enter
+      4. Input `add t/doctor n/John Wayne p/11111111 de/OB` and enter
+      5. Proceed to conduct the following tests in sequential order
+   
+   2. Test case: `Up` arrow key is pressed once
+      Expected: `add t/doctor n/John Wayne p/11111111 de/OB` should show up in the input box.
+   
+   3. Test case: `Up` arrow key is pressed twice
+      Expected: `clear` should show up in the input box.
+   
+   4. Test case: `Up` arrow key is pressed once
+      Expected: `clear` should still be in the input box.
+
+2. Going forward to more recent commands
+
+      1. **Note:**
+         1. The current state before any tests are done in this section should be carried over from the previous section.
+         2. The following tests should be done in order
+      
+      2. Test case: `Down` arrow key is pressed once
+         Expected: `add t/doctor n/John Smith p/98765432 de/Cardiology` should show up in the input box.
+   
+      3. Test case: `Down` arrow key is pressed twice
+         Expected: The input box should be cleared.
+   
+## **Appendix: Effort**
+
+**Overview**
+
+Overall, this project is a moderately challenging application. Most of the features here are `CRUD` features, but a lot of efforts need to be put to replicate `CRUD` for an extra model in the application as we add some specific characteristics to each model. While the original AB3 only deals with 
+one entity type which is `Person`, we modify the `Person` to be a generic class and add three models called `Activity`, `Patient` and `Doctor`. 
+
+Our app is more complex in a sense we need to deal
+with three entities at once and manage the interactions between them such as creating appointments, viewing patients, creating referral, etc. Also, we need to maintain the information of which 
+model is being displayed and switching the "page" of these three models depending on the commands called. Hence, a lot of `ObservableValue<T>` from `JavaFX` library is used to so that the `Ui` can monitor
+the model of interest currently.
+
+Not only that, there is an extra model called `UserProfile` to personalize the application as it will display the user identity in te sidebar, and the `UserProfile` is also used for creating a referral. 
+
+**Some noteworthy efforts:**
+
+1. To implement the responsive table view, we need to mainly refer to  [this `TableView` article](http://tutorials.jenkov.com/javafx/tableview.html). 
+We need to learn about `tableCellFactory` also to change the height dynamically based on the length of the data inside the cell.
+2. The implementation of `CRUD` methods of `Activity`, `Doctor` and `Patient` mainly refers from AB3 `Person` and their commands. However, we create all our fields ourselves and test them. For `Time` field, it is mainly a wrapper over `LocalDateTime` class provided by Java. 
+3. We overhaul the entire `Ui` based on the Figma, therefore we also create a new side window, and modifies the `CSS` moderately. We also discard the `personView` and `personCard` as they are no longer used. 
+4. We allow users to add `Appointment`, an extension of `Activity` which stores related patient in the appointment.
+5. We create a new `Ui` for viewing patient details which will show all the patient's appointments and medical conditions.
+6. Quality of life improvements such as a more extensive help page, ability to see suggestions for misspelt commands and
+ability to navigate between all inputted commands in the current session.
+
+*{...more to be added}*
