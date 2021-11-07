@@ -11,13 +11,13 @@ GoMedic is a **cross-platform desktop application written in Java and designed f
 manage contacts and patient details**. We aim for GoMedic to be used by someone who can type fast and take advantage of the
 optimized features for Command Line Interface.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Table of Contents**
 * Table of Contents
 {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Acknowledgements**
 * Project bootstrapped from: [SE-EDU Address Book 3](https://se-education.org/addressbook-level3/)
@@ -38,7 +38,7 @@ should end at the destroy marker (X) but due to a limitation of PlantUML, the li
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
