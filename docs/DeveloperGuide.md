@@ -469,6 +469,8 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 | `* *  `  | forgetful user                             | search for specific activities and appointments within a specific time frame       | plan ahead and focus on those time slots only                         |
 | `*    `  | organized user                             | change the reminder settings (minutes)                     | tailor it according to my preference                         |
 
+<div style="page-break-after: always;"></div>
+
 #### [EPIC] Information Retrieval and Organization
 
 | Priority | As a …​                                 | I want to …​                                                        | So that I can…​                                                        |
@@ -485,6 +487,8 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 | `* * *`  | new user                                   | sample entries in the app                                              | know how the app would look like when I would populate it with my data
 | `* * *`  | new user                                   | have suggestions on typo that I made on commands                       | learn from my mistakes and correct it quickly
 | `* *`    | fickle user                                | have the app accept multiple fixed ways to write dates and times       | do not need to remember the correct format all the time
+
+<div style="page-break-after: always;"></div>
 
 ### Use cases
 
@@ -682,6 +686,8 @@ entries corresponding to the user's input.
     * 1b1. GoMedic shows a feedback to the user about the detail of the constraint that is violated. 
 
       Use case ends.
+
+<div style="page-break-after: always;"></div>
 
 ### Non-Functional Requirements
 
