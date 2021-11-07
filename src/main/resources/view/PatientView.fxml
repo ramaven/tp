@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<!--Solution below adapted from
+https://stackoverflow.com/questions/9832896/how-do-specify-a-width-percentage-in-javafx-2-using-fxml-->
 <ScrollPane id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             HBox.hgrow="ALWAYS" fitToWidth="true">
     <VBox id="vboxPatient" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
