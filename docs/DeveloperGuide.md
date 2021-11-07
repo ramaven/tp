@@ -762,7 +762,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Add a new patient by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
 
-    1. Prerequisites: Ensure you patients data are empty by using `clear t/patient` command and check it again using `list t/patient` command. The table should show "no patients to be displayed".
+    1. Prerequisites: Ensure your patients data are empty by using `clear t/patient` command and check it again using `list t/patient` command. The table should show "no patients to be displayed".
 
     2. Test case: `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes`<br>
        Expected: New patient whose id `P001` is created, confirmation is shown in feedback box, and the patient table is shown.
@@ -778,6 +778,23 @@ testers are expected to do more *exploratory* testing.
 
     6. Other incorrect `add t/patient` commands to try: `add t/patients`, invalid parameters, `...` <br>
        Expected: Error message shown in the feedback box.
+
+3. Add a new doctor by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
+
+    1. Prerequisites: Ensure the doctors' data are empty by using `clear t/doctor` command and check it again using `list t/doctor` command. The table should show "no doctors to be displayed".
+
+    2. Test case: `add t/doctor n/John Smith p/98765432 de/Cardiology`<br>
+       Expected: New doctor whose id `D001` is created, confirmation is shown in feedback box, and the doctor table is shown.
+
+    4. Test case: `add t/doctor n/Tim Burton p/93561345`<br>
+       Expected: Error message of invalid command format is shown in the feedback box, as a department was not specified. 
+
+    5. Test case: `add t/doctor n/Cedric Tom p/11112222333 de/Cardiology`<br>
+       Expected: Error message that phone number should be 8 digits long is shown in the feedback box.
+
+    6. Other incorrect `add t/doctor` commands to try: `add t/doctors`, invalid parameters, `...` <br>
+       Expected: Error message shown in the feedback box.
+
    
 ### Deleting a record in GoMedic
 
@@ -817,6 +834,21 @@ testers are expected to do more *exploratory* testing.
 
     6. Other incorrect delete patient commands to try: `delete t/patient`, `delete t/patients`, `delete t/patient x` (where x is an invalid id), `...` <br>
        Expected: Error message shown in the feedback box.
+
+1. Deleting a doctor while all doctors are being shown
+    1. Prerequisites: List all doctors using the `list t/doctor` command.
+       Ensure at least 1 doctor with id `D001` is there, otherwise please use `add t/doctor` command to add a new doctor.
+       Multiple doctors will be displayed in a table sorted by its id.
+       
+    2. Test case: `delete t/doctor D001`<br>
+       Expected: Doctor with id `D001` is deleted. Details of the deleted doctor are shown in the feedback box.
+
+    3. Test case: `delete t/doctor D001`<br>
+       Expected: No doctor is deleted. Error details shown in the feedback box.
+
+    4. Other incorrect delete doctor commands to try: `delete t/doctor`, `delete t/doctors`, `delete t/doctor x` (where x is an invalid id), `...` <br>
+      Expected: Error message shown in the feedback box.
+
        
 ### Editing a record in GoMedic
 
