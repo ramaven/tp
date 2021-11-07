@@ -271,7 +271,9 @@ various fixed error outputs for GoMedic. It also implements the following operat
 * `Messages#getSuggestions(String command)` — Returns suggested commands within GoMedic based on the incorrect command
 input.
 
-Given below is a sequence diagram when a user provides an erroneous input, "adl t/patent".
+<div style="page-break-after: always;"></div>
+
+Given below is a *Sequence Diagram* when a user provides an erroneous input, "adl t/patent".
 
 ![SuggestionsSequenceDiagram](images/SuggestionsSequenceDiagram.png)
 
@@ -291,6 +293,8 @@ exception with `reply` as the error message to the user.
 * The suggestions are generated according to how close the erroneous commands are to the existing commands using the
 Levenshtein Distance metric and then ranked. The final output is an intersection of the suggestions generated from the 
 two suggestion functions mentioned above.
+
+<div style="page-break-after: always;"></div>
 
 ### Generating Medical Referral Feature 
 
@@ -370,6 +374,8 @@ As seen in the diagram above, after the `LogicManager` receives the `ProfileComm
 6. Finally, `LogicManager` calls `Storage#saveAddressBook(addressBook)` to update the new user profile in the storage and returns
 the `CommandResult` to be displayed to the user.
 
+<div style="page-break-after: always;"></div>
+
 ### View feature
 This feature allows user to view patient's details as PatientTable does not show complete details of the patients.
 
@@ -434,6 +440,8 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 * **Medium (nice to have)** - `* *`
 * **Low (unlikely to have)** - `*`
 
+<div style="page-break-after: always;"></div>
+
 #### [EPIC] Basic CRUD Functionality for patients and doctors
 
 | Priority | As a …​                                 | I want to …​                             | So that I can…​                                                        |
@@ -478,9 +486,9 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 | `* * *`  | new user                                   | have suggestions on typo that I made on commands                       | learn from my mistakes and correct it quickly
 | `* *`    | fickle user                                | have the app accept multiple fixed ways to write dates and times       | do not need to remember the correct format all the time
 
-*{More to be added}*
-
 ### Use cases
+
+List of notable use cases in **GoMedic**. 
 
 (For all use cases below, the **System** is the `GoMedic` and the **Actor** is the `user`, unless specified otherwise)
 
@@ -674,8 +682,6 @@ entries corresponding to the user's input.
     * 1b1. GoMedic shows a feedback to the user about the detail of the constraint that is violated. 
 
       Use case ends.
-    
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -704,8 +710,6 @@ entries corresponding to the user's input.
 16. The app is mainly used for users based in Singapore, and therefore some local terms are tolerable, and the app is
     not expected to operate in other languages except English.
 
-*{More to be added}*
-
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X.
@@ -717,7 +721,7 @@ entries corresponding to the user's input.
   functions and logic. For complete list of Features that OO design should have,
   please [visit this wikipedia page](https://en.wikipedia.org/wiki/Object-oriented_programming)
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -1205,5 +1209,3 @@ We need to learn about `tableCellFactory` also to change the height dynamically 
 5. We create a new `Ui` for viewing patient details which will show all the patient's appointments and medical conditions.
 6. Quality of life improvements such as a more extensive help page, ability to see suggestions for misspelt commands and
 ability to navigate between all inputted commands in the current session.
-
-*{...more to be added}*
