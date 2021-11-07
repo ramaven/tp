@@ -72,8 +72,8 @@ Given below are some of my notable contributions to the project.
           segment of the original AB3 DG. This included updating the Class Diagram, adding an additional Class Diagram as well as adding more details about the implementation of the `Model` class in general.
         * Wrote the section about the implementation of the [suggestions feature execution](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#suggestions-feature).
         * Wrote the section about the implementation of the [command history feature execution](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#command-history-feature).
-        * Wrote Use Case 4.
-        * Wrote manual testing cases for [suggestions]() and command history
+        * Wrote Use Case 4 in the [Use cases](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#use-cases) section.
+        * Wrote manual testing cases for [suggestions](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#displaying-suggestions-for-commands-that-are-misspelled) and [command history](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#navigating-between-all-commands-input-in-the-current-session)
 
 * **Community**:
     * Reviewed PRs of fellow teammates (Some with non-trivial review comments, E.g. [PR #222](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/222), [PR #123](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/123))
