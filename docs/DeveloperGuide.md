@@ -379,12 +379,12 @@ Given below is an activity diagram showing the event flow when the user wants to
 implementation is similar to that of the example covered in the `ReferralCommand` above.
 </div>
 
+![ViewPatientCommandExecution](images/ViewPatientExecution.png)
+
 After the `LogicManager` receives the new `ViewPatientCommand` object,
 1. The `ViewPatientCommand` would call the appropriate method from the `Model` to obtain the `Patient`'s specific details
    to be viewed.
 2. Only then a `CommandResult` object will be returned.
-
-![ViewPatientCommandExecution](images/ViewPatientExecution.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -507,8 +507,8 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 
 1. User requests to list all patients.
 2. GoMedic shows a list of patients.
-3. User requests to delete a specific person in the list.
-4. GoMedic deletes the person.
+3. User requests to delete a specific patient in the list.
+4. GoMedic deletes the patient.
 
    Use case ends.
 
@@ -599,7 +599,7 @@ entries corresponding to the user's input.
 1. User requests to list all patients.
 2. GoMedic shows a list of patients.
 3. User requests to view a specific patient in the list.
-4. GoMedic shows the person details
+4. GoMedic shows the patient's details
 
    Use case ends.
 
@@ -637,6 +637,8 @@ entries corresponding to the user's input.
 
 1. User wants to get the previous command he typed.
 2. GoMedic shows the previous command the user typed.
+
+   Use case ends.
 
 **Extensions**
 
@@ -740,7 +742,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Add a new activity by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
 
-    1. **Prerequisites**: Ensure you activities data are empty by using `clear t/activity` command and check it again using `list t/activity` command. The table should show "no activities to be displayed".
+    1. **Prerequisite**: Ensure you activities data are empty by using `clear t/activity` command and check it again using `list t/activity` command. The table should show "no activities to be displayed".
 
     2. Test case: `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Activity 1 d/Discussing the future of CS2103T-T15 Group!`<br>
        Expected: New activity whose id `A001` is created, confirmation is shown in feedback box, and the activity table is shown.
@@ -757,26 +759,26 @@ testers are expected to do more *exploratory* testing.
     6. Test case: `add t/activity s/15-09-2025 15:00 e/15-09-2025 14:00 ti/Activity 5`<br>
        Expected: Error message start time must be strictly less than end time is shown in the feedback box.
    
-    7. Other incorrect `add t/activity` commands to try: `add t/activities`, invalid parameters, `...` <br>
+    7. Other incorrect `add t/activity` commands to try: `add t/activities` with invalid parameters, `...` <br>
        Expected: Error message shown in the feedback box.
 
 2. Add a new patient by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
 
-    1. Prerequisites: Ensure your patients data are empty by using `clear t/patient` command and check it again using `list t/patient` command. The table should show "no patients to be displayed".
+    1. **Prerequisite**: Ensure you patients data are empty by using `clear t/patient` command and check it again using `list t/patient` command. The table should show "no patients to be displayed".
 
     2. Test case: `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes`<br>
        Expected: New patient whose id `P001` is created, confirmation is shown in feedback box, and the patient table is shown.
 
     3. Test case: `add t/patient n/John Snow p/12312312 a/51 b/B+ g/M h/173 w/65 m/heart failure`<br>
-       Expected: New patient whose id `P002` is created with empty description.
+       Expected: New patient whose id `P002` is created.
 
     4. Test case: `add t/patient n/Tim Burton p/33334444 a/50 b/O- g/M h/173 w/65`<br>
-       Expected: Error message blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized will be shown in the feedback box.
+       Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
     5. Test case: `add t/patient n/Cedric Tom p/11112222 a/23 b/O+ g/M h/800 w/65`<br>
        Expected: Error message height should be integer between 1 and 300 inclusive is shown in the feedback box.
 
-    6. Other incorrect `add t/patient` commands to try: `add t/patients`, invalid parameters, `...` <br>
+    6. Other incorrect `add t/patient` commands to try: `add t/patients` with invalid parameters, etc. <br>
        Expected: Error message shown in the feedback box.
 
 3. Add a new doctor by supplying all necessary parameters. Do the test cases sequentially to ensure correct id number is created.
@@ -800,7 +802,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting an activity while all activities are being shown
 
-    1. **Prerequisites**: List all activities using the `list t/activity` command. 
+    1. **Prerequisite**: List all activities using the `list t/activity` command. 
        Ensure at least 1 activity with id `A001` is there, otherwise please use `add t/activity` command to add a new activity. 
        Multiple activities will be displayed in a table sorted by its id.
 
@@ -815,7 +817,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Deleting a patient while all patients are being shown
 
-    1. Prerequisites: List all patients using the `list t/patient` command.
+    1. **Prerequisite**: List all patients using the `list t/patient` command.
        Ensure at least 1 patient with id `P001` is there, otherwise please use `add t/patient` command to add a new patient.
        Multiple patients will be displayed in a table sorted by its id.
 
@@ -825,14 +827,14 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `delete t/patient P001`<br>
        Expected: No patient is deleted. Error details shown in the feedback box.
 
-    4. Prerequisites: Clear the entire GoMedic using `clear` command.
+    4. **Prerequisite**: Clear the entire GoMedic using `clear` command.
        Add 1 new patient by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
        1 new appointment by running `add t/appointment i/P001 s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Appointment with P001 d/Follow-up from tuesday's appointment.`
 
     5. Test case: `delete t/patient P001`<br>
        Expected: Patient with id `P001` is deleted. Details of the deleted patient shown in the feedback box. Appointment related to the patient will be deleted as well.
 
-    6. Other incorrect delete patient commands to try: `delete t/patient`, `delete t/patients`, `delete t/patient x` (where x is an invalid id), `...` <br>
+    6. Other incorrect delete patient commands to try: `delete t/patient`, `delete t/patients`, `delete t/patient x` (where x is an invalid id), etc <br>
        Expected: Error message shown in the feedback box.
 
 1. Deleting a doctor while all doctors are being shown
@@ -854,7 +856,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing an existing activity
 
-    1. **Prerequisites**: Clear the entire activity using `clear t/activity` command. 
+    1. **Prerequisite**: Clear the entire activity using `clear t/activity` command. 
    Add a new activity using `add t/activity` command to ensure at least 1 activity with id `A001` is there. Check that it exists using `list t/activity`. Please do the test sequentially. 
 
     2. Test case: `edit t/activity i/A001 ti/Another new title`<br>
@@ -870,12 +872,12 @@ testers are expected to do more *exploratory* testing.
    `edit t/activity i/A001 s/15/09/2022 14:00 e/15/09/2022 15:00`<br>
        Expected: Error message shows the activity's timing is conflicting with another activity.
 
-    6. Other incorrect `edit t/activity` commands to try: `edit t/activity i/a001 pi/p001` (cannot change patient id), `edit t/activities`, `edit t/activity` (no parameters), `...` <br>
+    6. Other incorrect `edit t/activity` commands to try: `edit t/activity i/a001 pi/p001` (cannot change patient id), `edit t/activities`, `edit t/activity` (no parameters), etc. <br>
       Expected: Error message shown in the feedback box.
        
 2. Editing an existing doctor
 
-    1. **Prerequisites**: Clear all existing doctors in GoMedic using `clear t/doctor` command. 
+    1. **Prerequisite**: Clear all existing doctors in GoMedic using `clear t/doctor` command. 
    Add a new doctor using `add t/doctor` command. Ensure that a doctor with id `D001` exists by executing `list t/doctor`. 
    Conduct the following tests in sequential order. 
 
@@ -893,23 +895,23 @@ testers are expected to do more *exploratory* testing.
 
 3. Editing an existing patient
 
-    1. **Prerequisites**: Clear the entire patient using `clear t/patient` command.
+    1. **Prerequisite**: Clear the entire patient using `clear t/patient` command.
        Add a new patient using `add t/patient` command to ensure at least 1 patient with id `P001` is there. Check that it exists using `list t/patient`. Please do the test sequentially.
 
     2. Test case: `edit t/patient i/P001 n/Tom tom`<br>
-       Expected: Patient whose id `P001` has its name changed to "Tom tom"
+       Expected: Patient whose id `P001` has his/her name changed to "Tom tom"
 
     3. Test case: `edit t/patient i/P001 h/165 w/76`<br>
-       Expected: Patient whose id `P001` has its height changed to "165" and weight changed to "76"
+       Expected: Patient whose id `P001` has his/her height changed to "165" and weight changed to "76"
 
     4. Test case: `edit t/patient i/P001 p/12345678 b/O-`<br>
-       Expected: Patient whose id `P001` has its phone number changed to "12345678" and blood type to "O-"
+       Expected: Patient whose id `P001` has his/her phone number changed to "12345678" and blood type to "O-"
 
     5. Test case: `edit t/patient i/P001 a/77 g/O`<br>
-       Expected: Patient whose id `P001` has its age changed to "77" and gender changed to "O"
+       Expected: Patient whose id `P001` has his/her age changed to "77" and gender changed to "O"
 
     6. Test case: `edit t/patient i/P001 b/C+`<br>
-       Expected: Error message blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized will be shown in the feedback box.
+       Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
     7. Other incorrect delete patient commands to try: `delete t/patients`, `edit t/patient` (no parameters), `...` <br>
        Expected: Error message shown in the feedback box.
@@ -939,7 +941,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Creating a referral using the template available. 
 
-    1. **Prerequisites**: Check that you have `[JAR Location]/data` folder, it should be created after you run **GoMedic** for the first time. 
+    1. **Prerequisite**: Check that you have `[JAR Location]/data` folder, it should be created after you run **GoMedic** for the first time. 
    Clear the entire patient and activity using `clear t/patient` and `clear t/doctor` respectively. Run the following commands to add 1 patient and doctor using
    `add t/patient n/John Doe p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and `add t/doctor n/John Smith p/98765432 de/Cardiology` respectively.<br> Check that patient whose id `P001` and doctor whose id `D001` exists
    using `list t/patient` and `list t/doctor` respectively. Also use this default profile by inputting this command `profile n/John Smith p/Senior Resident de/Cardiology o/NUH`.
@@ -955,7 +957,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Viewing an existing patient
 
-    1. **Prerequisites**: Clear the entire patient using `clear t/patient` command.
+    1. **Prerequisite**: Clear the entire patient using `clear t/patient` command.
        Add a new patient using `add t/patient` command to ensure only 1 patient exist with id `P001` is there. Check that it exists using `list t/patient`. Please do the test sequentially.
 
     2. Test case: `view t/patient P001`<br>
@@ -964,14 +966,14 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `view t/patient P002`<br>
        Expected: Error message the patient id doesn't exist in the list will be shown in the feedback box
        
-    4. Other incorrect delete patient commands to try: `view t/patients`, `view t/patient` (no parameters), `...` <br>
+    4. Other incorrect view patient commands to try: `view t/patients`, `view t/patient` (no parameters), etc. <br>
        Expected: Error message shown in the feedback box.
 
 ### Listing records in GoMedic
 
 1. Listing activities in GoMedic
 
-    1. **Prerequisites**: Clear all existing activities in GoMedic using `clear t/activity` command.
+    1. **Prerequisite**: Clear all existing activities in GoMedic using `clear t/activity` command.
        Add 2 new activities by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/team meeting d/CS2103t group discussion` and
        `add t/activity s/14/09/2022 11:00 e/14/09/2022 12:00 ti/Lunch with CEO d/Lunch to discuss promotion` in order.
        Conduct the following tests in sequential order.
@@ -997,7 +999,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Listing doctors in GoMedic
 
-    1. **Prerequisites**: Clear all existing doctors in GoMedic using `clear t/doctor` command.
+    1. **Prerequisite**: Clear all existing doctors in GoMedic using `clear t/doctor` command.
        Add 2 new doctors by running `add t/doctor n/John Smith p/98765432 de/Cardiology` and
        `add t/doctor n/Tom Hill p/12345678 de/Radiology` in order.
        Conduct the following tests in sequential order.
@@ -1014,7 +1016,7 @@ testers are expected to do more *exploratory* testing.
 
 3. Listing patients in GoMedic
 
-    1. **Prerequisites**: Clear all existing patients in GoMedic using `clear t/patient` command.
+    1. **Prerequisite**: Clear all existing patients in GoMedic using `clear t/patient` command.
        Add 2 new patients by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
        `add t/patient n/Joan Lim p/12345678 a/30 b/A- g/F h/165 w/45 m/high blood pressure` in order.
        Conduct the following tests in sequential order.
@@ -1033,16 +1035,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Clearing activity records in GoMedic
 
-    1. **Prerequisites** (**run before every test case**): Clear the entire activity using `clear t/activity` command.
+    1. **Prerequisite** (**run before every test case**): Clear the entire activity using `clear t/activity` command.
        Add 2 new activities by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y d/Discussing the future of CS2103T-T15 Group!` and
        `add t/activity s/16/09/2022 14:00 e/16/09/2022 15:00 ti/Meeting with Mr. X d/Discussing the features of CS2103T-T15 Project!` in order.
        Conduct the following tests in sequential order.
 
-    2. Test case: `clear t/patient`<br>
-       Expected: GoMedic shows an empty patient table
+    2. Test case: `clear t/activity`<br>
+       Expected: GoMedic shows an empty activity table
 
-    3. Test case: `clear t/patient extra parameters supplied here`<br>
-       Expected: GoMedic shows an empty patient table, as it ignores the
+    3. Test case: `clear t/activity extra parameters supplied here`<br>
+       Expected: GoMedic shows an empty activity table, as it ignores the
        extra parameters supplied.
 
     4. Other invalid `clear t/activity` commands to try: `clear t/activities` <br>
@@ -1050,7 +1052,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Clearing doctor records in GoMedic
 
-    1. **Prerequisites** (**run before every test case**): Clear the entire doctor using `clear t/doctor` command.
+    1. **Prerequisite** (**run before every test case**): Clear the entire doctor using `clear t/doctor` command.
        Add 2 new doctors by running `add t/doctor n/John Smith p/98765432 de/Cardiology` and
        `add t/doctor n/Tommy Tom p/12312312 de/Skin` in order.
        Conduct the following tests in sequential order.
@@ -1067,7 +1069,7 @@ testers are expected to do more *exploratory* testing.
 
 3. Clearing patient records in GoMedic
    
-    1. **Prerequisites** (**run before every test case**): Clear the entire patient using `clear t/patient` command.
+    1. **Prerequisite** (**run before every test case**): Clear the entire patient using `clear t/patient` command.
        Add 2 new patients by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` and
        `add t/patient n/Joan Lim p/12345678 a/30 b/A- g/F h/165 w/45 m/high blood pressure` in order.
        
@@ -1083,7 +1085,7 @@ testers are expected to do more *exploratory* testing.
        extra parameters supplied.
        
     4. Test case: `clear t/patient`<br>
-       Expected: GoMedic shows an empty patient table and delete all appointments as all of the patients are deleted
+       Expected: GoMedic shows an empty patient table and delete all appointments as all the patients are deleted
 
     5. Other invalid `clear t/patient` commands to try: `clear t/patients` <br>
        Expected: Feedback box displays error message indicating an invalid command.
@@ -1091,8 +1093,8 @@ testers are expected to do more *exploratory* testing.
 4. Clearing all records in GoMedic
 
     1. **Prerequisites** (**run before every test case**): Clear the entire GoMedic using `clear` command.
-       Add 1 new activity by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y d/Discussing the future of CS2103T-T15 Group!`
-       1 new doctor by running `add t/doctor n/John Smith p/98765432 de/Cardiology`
+       Add 1 new activity by running `add t/activity s/15/09/2022 14:00 e/15/09/2022 15:00 ti/Meeting with Mr. Y d/Discussing the future of CS2103T-T15 Group!`,
+       1 new doctor by running `add t/doctor n/John Smith p/98765432 de/Cardiology`, and
        1 new patient by running `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes`
        Conduct the following tests in sequential order.
 
@@ -1106,7 +1108,7 @@ testers are expected to do more *exploratory* testing.
 ### Finding a patient, doctor or activity
 
 1. Searching for a doctor or a patient
-    1. Prerequisite: List the patients, doctors, or activities based on which one you wish to see, using the `list` command.
+    1. **Prerequisite**: List the patients, doctors, or activities based on which one you wish to see, using the `list` command.
     e.g. `list t/doctor` or `list t/patient` or `list t/activity`.
        
     2. Test case: e.g. `find t/patient n/Joe`
