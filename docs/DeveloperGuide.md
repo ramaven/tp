@@ -492,7 +492,7 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
 
 ### Notable Use cases
 
-(For all use cases below, the **System** is the `GoMedic` and the **Actor** is the `user`, unless specified otherwise)
+For all use cases, the **System** is the `GoMedic` and the **Actor** is the `user`, unless specified otherwise
 
 **Use Case: [UC1] - Adding a new patient record**
 
@@ -1122,7 +1122,9 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `clear extra parameters supplied here`<br>
        Expected: GoMedic clears all records for activities, doctors, and patients, as it ignores the
        extra parameters supplied.
-       
+
+<div style="page-break-after: always;"></div>
+
 ### Finding a patient, doctor or activity
 
 1. Searching for a doctor or a patient
@@ -1161,6 +1163,8 @@ testers are expected to do more *exploratory* testing.
 
    3. Test case: e.g. `add t/apsda`
       Expected: Feedback box should only say, `Sorry, add t/apsda is an invalid command.`
+
+<div style="page-break-after: always;"></div>
 
 ### Navigating between all commands input in the current session
 
