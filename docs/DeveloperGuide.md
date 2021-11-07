@@ -1121,7 +1121,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Displaying suggestions for commands that are misspelled
 
-1. Displaying suggestions for commands that are mispelt and in invalid format
+1. Displaying suggestions for commands that are misspelt and in invalid format
 
    1. Test case: e.g. `find pateint`
       Expected: `find t/patient`, `find t/doctor`, `find t/activity` should all be listed in the feedback box.
