@@ -912,7 +912,7 @@ testers are expected to do more *exploratory* testing.
     6. Test case: `edit t/patient i/P001 b/C+`<br>
        Expected: Error message "blood type should only contain A+, A-, B+, B-, AB+, AB-, O+, or O-, and it should not be blank. All non capital letters will be capitalized" will be shown in the feedback box.
 
-    7. Other incorrect delete patient commands to try: `edit t/patients`, `edit t/patient` (no parameters), etc <br>
+    7. Other incorrect `edit t/patient` commands to try: `edit t/patients`, `edit t/patient` (no parameters), etc <br>
        Expected: Error message shown in the feedback box.
 
 ### Changing the user profile
