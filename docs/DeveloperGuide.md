@@ -1119,6 +1119,62 @@ testers are expected to do more *exploratory* testing.
     4. Other incorrect find commands to try: `find t\patient Joe` 
         Expected: Error message as a flag is not specified prior to the keyword.
 
+### Displaying suggestions for commands that are misspelled
+
+1. Displaying suggestions for commands that are misspelt and in invalid format
+
+   1. Test case: e.g. `find pateint`
+      Expected: `find t/patient`, `find t/doctor`, `find t/activity` should all be listed in the feedback box.
+   
+   2. Test case: e.g. `clap`
+      Expected: `clear t/patient`, `clear t/doctor`, `clear t/activity`, `clear` should all be listed in the feedback box.
+   
+   3. For really badly spelt commands, such as this test case: e.g. `asdahsdhajshd`
+      Expected: Feedback box should only say, `Sorry, asdahsdhajshd is an invalid command.`
+
+2. Displaying suggestions for commands that are misspelt but in valid format
+
+   1. Test case: e.g. `find t/pateint`
+      Expected: only `find t/patient` should be listed in the feedback box.
+   
+   2. Test case: e.g. `add t/appent`
+      Expected: `add t/patient`, `add t/appointment` should both be listed in the feedback box.
+
+   3. Test case: e.g. `add t/apsda`
+      Expected: Feedback box should only say, `Sorry, add t/apsda is an invalid command.`
+
+### Navigating between all commands input in the current session
+
+1. Going back to previously typed commands
+
+   1. **Prerequisite** (follow the steps accordingly before going ahead with the tests in this section): 
+      1. Open up GoMedic
+      2. Clear GoMedic with the `clear` command
+      3. Input `add t/doctor n/John Smith p/98765432 de/Cardiology` and enter
+      4. Input `add t/doctor n/John Wayne p/11111111 de/OB` and enter
+      5. Proceed to conduct the following tests in sequential order
+   
+   2. Test case: `Up` arrow key is pressed once
+      Expected: `add t/doctor n/John Wayne p/11111111 de/OB` should show up in the input box.
+   
+   3. Test case: `Up` arrow key is pressed twice
+      Expected: `clear` should show up in the input box.
+   
+   4. Test case: `Up` arrow key is pressed once
+      Expected: `clear` should still be in the input box.
+
+2. Going forward to more recent commands
+
+      1. **Note:**
+         1. The current state before any tests are done in this section should be carried over from the previous section.
+         2. The following tests should be done in order
+      
+      2. Test case: `Down` arrow key is pressed once
+         Expected: `add t/doctor n/John Smith p/98765432 de/Cardiology` should show up in the input box.
+   
+      3. Test case: `Down` arrow key is pressed twice
+         Expected: The input box should be cleared.
+   
 ## **Appendix: Effort**
 
 **Overview**
@@ -1141,5 +1197,7 @@ We need to learn about `tableCellFactory` also to change the height dynamically 
 3. We overhaul the entire `Ui` based on the Figma, therefore we also create a new side window, and modifies the `CSS` moderately. We also discard the `personView` and `personCard` as they are no longer used. 
 4. We allow users to add `Appointment`, an extension of `Activity` which stores related patient in the appointment.
 5. We create a new `Ui` for viewing patient details which will show all the patient's appointments and medical conditions.
+6. Quality of life improvements such as a more extensive help page, ability to see suggestions for misspelt commands and
+ability to navigate between all inputted commands in the current session.
 
 *{...more to be added}*
