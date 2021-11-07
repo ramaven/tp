@@ -240,7 +240,7 @@ Parameters    |  Explanation                                      | Constraints 
 `PATIENT_ID`  | the Patient Id as shown by the Patient table  (case-insensitive)    | Must be in the form of `PXXX` / `pXXX` where `XXX` is 3-digit integer. For the full information, please refer to [this](#311-overview) |
 
 <div markdown="span" class="alert alert-info">
-:bulb: **Tip:** Patient ID can be obtained by listing all the patients using [`list t/patient` command](#314-list-all-patients-list-patient)
+:bulb: **Tip:** Patient ID can be obtained by listing all the patients using [`list t/patient` command](#314-list-all-patients-list-tpatient)
 or search the specific patient using [`find t/patient` command](#343-finding-a-patient-through-a-keyword-find-tpatient).
 </div>
 
