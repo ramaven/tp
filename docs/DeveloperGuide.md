@@ -437,8 +437,6 @@ After the `LogicManager` receives the new `FindPatientCommand` object,
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
-<div style="page-break-after: always;"></div>
-
 ## **Appendix: Requirements**
 
 ### Product scope
