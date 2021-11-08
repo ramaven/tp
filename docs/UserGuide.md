@@ -1197,7 +1197,7 @@ If the format for the user profile is invalid, the preset user profile will be u
 
 **Q**: I can't double-click on the `gomedic.jar` file to open it. What should I do?<br>
 **A**: Please check that you have Java `11` or above installed in your Computer by opening the terminal. You can do so by entering the command `java --version`. It should show `java 11.x.xx` or `openjdk 11.x.xx`, depending on the Java `11` distribution you are using.
-Following that, enter the command `java -jar gomedic.jar` in the directory that `gomedic.jar` is resides in. Some precautions : 
+Following that, enter the command `java -jar gomedic.jar` in the directory that `gomedic.jar` resides in. Some precautions : 
 
 2. For Windows user, please do not open it using Windows Subsystem Linux (WSL), please use Windows PowerShell to run `gomedic.jar`
 3. For Mac users, you can follow the precautions stated [here](https://github.com/nus-cs2103-AY2122S1/forum/issues/353) to open your `jar` file.
