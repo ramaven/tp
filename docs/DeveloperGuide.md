@@ -398,9 +398,6 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
    to be viewed.
 2. Only then a `CommandResult` object will be returned.
 
-<div style="page-break-after: always;"></div>
-
-
 ### Find feature
 
 This feature allows you to search for entries based on user input by matching
@@ -417,9 +414,7 @@ For example, ```find t/patient n/John Alice``` will display patients whose name 
 Given below is an activity diagram showing the event flow when the user wants to find a patient based on the name field
  with specified keywords:
 
-
 ![FindCommandActivityDiagram](images/FindCommandActivityDiagram.png)
-
 
 Given below is a sequence diagram showing the event flow when the user wants to find patients based on the name field 
 (```find t/patient n/John Alice```)
@@ -431,9 +426,6 @@ After the `LogicManager` receives the new `FindPatientCommand` object,
    match with the user's input keywords.
    
 2. Only then will a `CommandResult` object be returned.
-
-
-<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
