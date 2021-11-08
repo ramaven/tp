@@ -43,7 +43,8 @@ Given below are some of my notable contributions to the project.
      who referenced this [blog](http://tutorials.jenkov.com/javafx/tableview.html) when creating his `TableView` for `Activity` .
 
 * **Enhancements to existing features**:
-  * Refactored AB3's `Person` and `UniquePersonList` classes (Notably in [PR #82](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/82), [PR #140](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/140)). 
+  * Refactored AB3's `Person` and `UniquePersonList` classes (Notably in [PR #82](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/82), 
+    [PR #140](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/140)). 
     Some notable points include:
     * Updating `Person` implementation so that it can be extended by GoMedic's `Doctor` and `Patient` classes.
     * Refactoring `UniquePersonList` to make use of Java generics to increase versatility and reusability of the class.
@@ -70,6 +71,8 @@ Given below are some of my notable contributions to the project.
       * Wrote [Use Case 9](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#use-cases).
       * Wrote the manual testing instructions for [listing records](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#listing-records-in-gomedic), 
         [changing user profile](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#changing-the-user-profile), [editing a doctor's record](https://ay2122s1-cs2103t-t15-1.github.io/tp/DeveloperGuide.html#editing-a-record-in-gomedic)
+
+<div style="page-break-after: always;"></div>
 
 * **Community**:
     * Reviewed PRs of fellow teammates (Some with non-trivial review comments, E.g. [PR #83](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/83), [PR #112](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/112))
