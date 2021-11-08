@@ -33,6 +33,11 @@ Given below are my notable contributions to the project.
         
     * Developer guide
       * Wrote the [find command implementation](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/286)
+      * Added manual testing instructions for adding a doctor and deleting a doctor
+        [PR #329](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/329)
+      * Added MSS for use case 5: Searching for specific records based on a specific field
+        [PR #183 ](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/183)
+
 
 
 * **UI Enhancement**: Change the dark theme of GoMedic to a light theme

@@ -398,6 +398,43 @@ After the `LogicManager` receives the new `ViewPatientCommand` object,
    to be viewed.
 2. Only then a `CommandResult` object will be returned.
 
+<div style="page-break-after: always;"></div>
+
+
+### Find feature
+
+This feature allows you to search for entries based on user input by matching
+the input string with the user-specified fields.
+
+This feature can be accessed using the ```find``` command, which has a parameter
+```t/``` that represents which kind of entry you are searching for (doctor which is represented by ```t/doctor```, 
+patient which is represented by ```t/patient``` or activity which is represented by ```t/activity```).
+It also takes another flag which specifies the field within that entry to which the user input will be matched to,
+followed by the keywords that the user wants to match the field to. 
+
+For example, ```find t/patient n/John Alice``` will display patients whose name contains ```John``` or ```Alice```.  
+
+Given below is an activity diagram showing the event flow when the user wants to find a patient based on the name field
+ with specified keywords:
+
+
+![FindCommandActivityDiagram](images/FindCommandActivityDiagram.png)
+
+
+Given below is a sequence diagram showing the event flow when the user wants to find patients based on the name field 
+(```find t/patient n/John Alice```)
+
+![FindPatientSequenceDiagram](images/FindPatientSequenceDiagram.png)
+
+After the `LogicManager` receives the new `FindPatientCommand` object,
+1. The `FindPatientCommand` would call the appropriate method from the `Model` to obtain the list of `Patient`s that 
+   match with the user's input keywords.
+   
+2. Only then will a `CommandResult` object be returned.
+
+
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
