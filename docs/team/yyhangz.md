@@ -43,7 +43,8 @@ Given below are some of my notable contributions to the project.
      who referenced this [blog](http://tutorials.jenkov.com/javafx/tableview.html) when creating his `TableView` for `Activity` .
 
 * **Enhancements to existing features**:
-  * Refactored AB3's `Person` and `UniquePersonList` classes (Notably in [PR #82](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/82), 
+  * Refactored AB3's `Person` and `UniquePersonList` classes <br>
+    (Notably in [PR #82](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/82), 
     [PR #140](https://github.com/AY2122S1-CS2103T-T15-1/tp/pull/140)). 
     Some notable points include:
     * Updating `Person` implementation so that it can be extended by GoMedic's `Doctor` and `Patient` classes.
