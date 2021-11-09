@@ -205,7 +205,7 @@ Parameters    |  Explanation                                      | Constraints 
 
 **Example:**
 
-&#8291;1. Type the command `add t/patient n/John Smith p/98765432 a/45 b/AB g/M h/175 w/70 m/heart failure m/diabetes` into
+&#8291;1. Type the command `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` into
 the command box.
 
 ![tut-patient-1](images/patientug/tut_patient_1.png)
