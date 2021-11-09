@@ -1051,7 +1051,7 @@ Parameters      |  Explanation                                                  
 
 &#8291;2. Press `Enter` a referral document will be generated at the specified location in the feedback box.
 
-![tut-referral-1](images/referral/tut_referral_2.png)
+![tut-referral-2](images/referral/tut_referral_2.png)
 
 <div style="page-break-after: always;"></div>
 
