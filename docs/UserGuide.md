@@ -1041,7 +1041,17 @@ Parameters      |  Explanation                                                  
 * The patient and doctor must both be present in the GoMedic App as a valid entry, else, the referral will not be generated.
 * The name of the pdf file will be the title given by the user in the input parameter.
 
-</div>
+<div style="page-break-after: always;"></div>
+
+**Example:**
+
+&#8291;1. Type the command `referral ti/some referral di/D001 pi/P001` into the command box.
+
+![tut-referral-1](images/referral/tut_referral_1.png)
+
+&#8291;2. Press `Enter` a referral document will be generated at the specified location in the feedback box.
+
+![tut-referral-1](images/referral/tut_referral_2.png)
 
 <div style="page-break-after: always;"></div>
 
