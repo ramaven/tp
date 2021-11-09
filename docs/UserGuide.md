@@ -205,7 +205,7 @@ Parameters    |  Explanation                                      | Constraints 
 
 **Example:**
 
-&#8291;1. Type the command `add t/patient n/John Smith p/98765432 a/45 b/AB g/M h/175 w/70 m/heart failure m/diabetes` into
+&#8291;1. Type the command `add t/patient n/John Smith p/98765432 a/45 b/AB+ g/M h/175 w/70 m/heart failure m/diabetes` into
 the command box.
 
 ![tut-patient-1](images/patientug/tut_patient_1.png)
@@ -683,7 +683,7 @@ To understand better how **GoMedic** classifies the error messages, please refer
 
 Adds a new appointment into your GoMedic scheduler.
 
-**Format**: `add t/activity i/PATIENT_ID s/START_TIME e/END_TIME ti/TITLE [d/DESCRIPTION]`
+**Format**: `add t/appointment i/PATIENT_ID s/START_TIME e/END_TIME ti/TITLE [d/DESCRIPTION]`
 
 An Appointment is a type of Activity, with an additional parameter `PATIENT_ID` associated with it. Currently, **GoMedic** only supports 
 one-to-one appointments. Besides the [checks](#activity_check) performed on usual activity, **GoMedic** would also check
