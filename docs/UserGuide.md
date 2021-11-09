@@ -1041,6 +1041,8 @@ Parameters      |  Explanation                                                  
 * The patient and doctor must both be present in the GoMedic App as a valid entry, else, the referral will not be generated.
 * The name of the pdf file will be the title given by the user in the input parameter.
 
+</div>
+
 <div style="page-break-after: always;"></div>
 
 **Example:**
