@@ -683,7 +683,7 @@ To understand better how **GoMedic** classifies the error messages, please refer
 
 Adds a new appointment into your GoMedic scheduler.
 
-**Format**: `add t/activity i/PATIENT_ID s/START_TIME e/END_TIME ti/TITLE [d/DESCRIPTION]`
+**Format**: `add t/appointment i/PATIENT_ID s/START_TIME e/END_TIME ti/TITLE [d/DESCRIPTION]`
 
 An Appointment is a type of Activity, with an additional parameter `PATIENT_ID` associated with it. Currently, **GoMedic** only supports 
 one-to-one appointments. Besides the [checks](#activity_check) performed on usual activity, **GoMedic** would also check
@@ -1041,7 +1041,17 @@ Parameters      |  Explanation                                                  
 * The patient and doctor must both be present in the GoMedic App as a valid entry, else, the referral will not be generated.
 * The name of the pdf file will be the title given by the user in the input parameter.
 
-</div>
+<div style="page-break-after: always;"></div>
+
+**Example:**
+
+&#8291;1. Type the command `referral ti/some referral di/D001 pi/P001` into the command box.
+
+![tut-referral-1](images/referral/tut_referral_1.png)
+
+&#8291;2. Press `Enter` a referral document will be generated at the specified location in the feedback box.
+
+![tut-referral-2](images/referral/tut_referral_2.png)
 
 <div style="page-break-after: always;"></div>
 
