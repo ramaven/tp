@@ -311,7 +311,7 @@ Parameters    |  Explanation                                      | Constraints 
 
 **Example:**
 
-&#8291;1. Type the command `edit t/patient i/P002 n/John Snow p/91234567 a/30 b/AB g/M h/185 w/85 m/cancer` into the command box. 
+&#8291;1. Type the command `edit t/patient i/P002 n/John Snow p/91234567 a/30 b/AB+ g/M h/185 w/85 m/cancer` into the command box. 
 Ensure that the edited patient, as identified by his/her `PATIENT_ID`, exists!
 
 ![tut-edit-patient-1](images/patientug/tut_edit_patient_1.png)
