@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Rama Venkatesh's Project Portfolio Page
+Title: Rama Venkatesh's Project Portfolio Page
 ---
 ### Project: GoMedic
 
@@ -9,6 +9,7 @@ We aim GoMedic to be used by someone who can type fast and take advantage of the
 Command Line Interface.
 
 Given below are my notable contributions to the project.
+
 * **Documentation**:
     * UI:
         * What it is: Created the UI mockup for GoMedic using Figma
