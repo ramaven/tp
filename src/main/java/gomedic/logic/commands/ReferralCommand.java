@@ -7,7 +7,6 @@ import static gomedic.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static gomedic.logic.parser.CliSyntax.PREFIX_DOCTOR_ID;
 import static gomedic.logic.parser.CliSyntax.PREFIX_PATIENT_ID;
 import static gomedic.logic.parser.CliSyntax.PREFIX_TITLE;
-import static gomedic.model.Model.PREDICATE_SHOW_ALL_ITEMS;
 import static gomedic.model.UserPrefs.ROOT_FOLDER;
 import static java.util.Objects.requireNonNull;
 
